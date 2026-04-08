@@ -1,0 +1,5 @@
+{
+  "name": "EndoAnalyst - Análisis Endocrinológico",
+  "description": "Asistente clínico para el análisis de resultados de laboratorio metabólicos y hormonales.",
+  "requestFramePermissions": ["camera"]
+}
