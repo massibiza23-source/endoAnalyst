@@ -44,7 +44,7 @@ import {
   AreaChart,
   Area
 } from 'recharts';
-import { AnalysisReport, BloodTestResult, UserProfile } from './services/gemini';
+import { analyzeBloodTest, AnalysisReport, BloodTestResult, UserProfile } from './services/gemini';
 
 interface AnalysisHistoryItem extends AnalysisReport {
   id: string;
@@ -208,18 +208,7 @@ export default function App() {
     setReport(null);
 
     try {
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input, profile, history: analysisHistory })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error al procesar el análisis.');
-      }
-
-      const result: AnalysisReport = await response.json();
+      const result = await analyzeBloodTest(input, profile, analysisHistory);
       if (!result || (!result.results && !result.glucoseAnalysis)) {
         throw new Error("No se pudieron extraer resultados válidos.");
       }
